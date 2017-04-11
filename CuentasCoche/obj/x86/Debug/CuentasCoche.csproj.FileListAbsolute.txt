@@ -1,0 +1,10 @@
+C:\Users\p.gsanchez\Documents\Visual Studio 2010\Projects\CuentasCoche\CuentasCoche\obj\x86\Debug\CuentasCoche.csprojResolveAssemblyReference.cache
+C:\Users\p.gsanchez\Documents\Visual Studio 2010\Projects\CuentasCoche\CuentasCoche\obj\x86\Debug\CuentasCoche.Form1.resources
+C:\Users\p.gsanchez\Documents\Visual Studio 2010\Projects\CuentasCoche\CuentasCoche\obj\x86\Debug\CuentasCoche.Properties.Resources.resources
+C:\Users\p.gsanchez\Documents\Visual Studio 2010\Projects\CuentasCoche\CuentasCoche\obj\x86\Debug\CuentasCoche.csproj.GenerateResource.Cache
+C:\Users\p.gsanchez\Documents\Visual Studio 2010\Projects\CuentasCoche\CuentasCoche\bin\Debug\CuentasCoche.exe
+C:\Users\p.gsanchez\Documents\Visual Studio 2010\Projects\CuentasCoche\CuentasCoche\bin\Debug\CuentasCoche.pdb
+C:\Users\p.gsanchez\Documents\Visual Studio 2010\Projects\CuentasCoche\CuentasCoche\obj\x86\Debug\CuentasCoche.exe
+C:\Users\p.gsanchez\Documents\Visual Studio 2010\Projects\CuentasCoche\CuentasCoche\obj\x86\Debug\CuentasCoche.pdb
+C:\Users\p.gsanchez\Documents\Visual Studio 2010\Projects\CuentasCoche\CuentasCoche\obj\x86\Debug\CuentasCoche.FormNuevoRepostaje.resources
+C:\Users\p.gsanchez\documents\visual studio 2010\Projects\CuentasCoche\CuentasCoche\obj\x86\Debug\CuentasCoche.FormNuevoMantenimiento.resources
