@@ -15,6 +15,8 @@ namespace CuentasCoche
         private float importe = 0;
         private DateTime fecha = System.DateTime.Today;
 
+        private int kmParciales = 0; // Se calcula. No se guarda en la BD
+
         // Propiedades de los atributos (set/get)
         public string Reparacion
         {
@@ -80,6 +82,17 @@ namespace CuentasCoche
             get
             {
                 return fecha;
+            }
+        }
+        public int KmParciales
+        {
+            set
+            {
+                kmParciales = value;
+            }
+            get
+            {
+                return kmParciales;
             }
         }
     }

@@ -54,6 +54,7 @@ namespace CuentasCoche
             ConfigAparienciaDlg();
             //ActualizarListaPpal();
             ActualizarListaPpal2();
+            dibujarGrafico1();
         }
 
 
@@ -103,12 +104,19 @@ namespace CuentasCoche
             return 0;
         }
 
+        /* La función ActualizarListaPpal2 compone la lista principal que se va a mostrar, a partir
+         * de las listas de Repostajes y Mantenimientos. 
+         * Además, esta lista principal estará ordenada de Mayor a menor kilometraje; es decir, los
+         * repostajes y mantenimientos más nuevos, aparecen arriba en la lista, y los más antiguos abajo
+         */
         private int ActualizarListaPpal2()
         {
             List<Repostaje>.Enumerator it1 = listaRep.GetEnumerator() ;
             List<Mantenimiento>.Enumerator it2 = listaMant.GetEnumerator();
             bool finLista1 = false;
             bool finLista2 = false;
+
+            listaPpal.Items.Clear();
 
             if (!it1.MoveNext())
                 finLista1 = true;
@@ -124,6 +132,7 @@ namespace CuentasCoche
                     item1.SubItems.Add(it1.Current.Fecha.ToShortDateString());
                     item1.SubItems.Add(it1.Current.KmTotales.ToString());
                     item1.SubItems.Add(it1.Current.Importe.ToString());
+                    item1.SubItems.Add(it1.Current.KmParciales.ToString());
                     listaPpal.Items.Add(item1);
                     // Se avanza it1 y se mira si ha llegado al final
                     if (!it1.MoveNext())
@@ -136,6 +145,7 @@ namespace CuentasCoche
                     item1.SubItems.Add(it2.Current.Fecha.ToShortDateString());
                     item1.SubItems.Add(it2.Current.KmTotales.ToString());
                     item1.SubItems.Add(it2.Current.Importe.ToString());
+                    item1.SubItems.Add(it2.Current.KmParciales.ToString());
                     listaPpal.Items.Add(item1);
                     // Se avanza it2 y se mira si ha llegado al final
                     if (!it2.MoveNext())
@@ -151,6 +161,7 @@ namespace CuentasCoche
                         item2.SubItems.Add(it2.Current.Fecha.ToShortDateString());
                         item2.SubItems.Add(it2.Current.KmTotales.ToString());
                         item2.SubItems.Add(it2.Current.Importe.ToString());
+                        item2.SubItems.Add(it2.Current.KmParciales.ToString());
                         listaPpal.Items.Add(item2);
                         // Se avanza it2 y se mira si ha llegado al final
                         if (!it2.MoveNext())
@@ -166,6 +177,7 @@ namespace CuentasCoche
                         item2.SubItems.Add(it1.Current.Fecha.ToShortDateString());
                         item2.SubItems.Add(it1.Current.KmTotales.ToString());
                         item2.SubItems.Add(it1.Current.Importe.ToString());
+                        item2.SubItems.Add(it1.Current.KmParciales.ToString());
                         listaPpal.Items.Add(item2);
                         // Se avanza it2 y se mira si ha llegado al final
                         if (!it1.MoveNext())
@@ -204,7 +216,7 @@ namespace CuentasCoche
 
             // Actualizar la lista de Repostajes y la pantalla Ppal
             LeerListaRepostajesBD();
-            ActualizarListaPpal();
+            ActualizarListaPpal2();
         }
 
         private void btnNuevoMantenimiento_Click(object sender, EventArgs e)
@@ -227,7 +239,7 @@ namespace CuentasCoche
 
             // Actualizar la lista de Mantenimentos y la pantalla Ppal
             LeerListaMantenimientosBD();
-            ActualizarListaPpal();
+            ActualizarListaPpal2();
         }
 
         private void ConfigAparienciaDlg()
@@ -241,6 +253,7 @@ namespace CuentasCoche
                     edtBuscar.Visible = false;
                     btnBuscar.Visible = false;
                     listBuscar.Visible = false;
+                    ChartPrecioGasolina.Visible = false;
                     break;
                 case 1: // Pestaña de busquedas
                     listaPpal.Visible = false;
@@ -249,6 +262,17 @@ namespace CuentasCoche
                     edtBuscar.Visible = true;
                     btnBuscar.Visible = true;
                     listBuscar.Visible = true;
+                    ChartPrecioGasolina.Visible = false;
+                    break;
+                case 2: // Pestaña gráficos
+                    listaPpal.Visible = false;
+                    btnNuevoMantenimiento.Visible = false;
+                    btnNuevoRepostaje.Visible = false;
+                    edtBuscar.Visible = false;
+                    btnBuscar.Visible = false;
+                    listBuscar.Visible = false;
+                    ChartPrecioGasolina.Visible = true;
+                    dibujarGrafico1();
                     break;
 
                 default:
@@ -271,7 +295,7 @@ namespace CuentasCoche
             foreach (Mantenimiento it in listaMant)
             {
                 index = it.Reparacion.ToUpper().IndexOf(textoABuscar.ToUpper());
-                if (index > 0)
+                if (index >= 0)
                 {
                     // Cadena encontrada
                     // Añadir a la lista
@@ -317,6 +341,24 @@ namespace CuentasCoche
                     {
                         FormNuevoRepostaje frmNuevoRep = new FormNuevoRepostaje(it);
                         frmNuevoRep.ShowDialog();
+                        Repostaje nuevoRep = new Repostaje();
+                        if (frmNuevoRep.GetKmTotales() == 0)
+                            return;
+
+                        nuevoRep.Litros = frmNuevoRep.GetLitros();
+                        nuevoRep.Precio = frmNuevoRep.GetPrecio();
+                        nuevoRep.Importe = frmNuevoRep.GetImporte();
+                        nuevoRep.KmTotales = frmNuevoRep.GetKmTotales();
+                        nuevoRep.Lugar = frmNuevoRep.GetLugar();
+                        nuevoRep.Fecha = frmNuevoRep.GetFecha();
+
+                        // Añadir el nuevo Repostaje a la BD
+                        mTablaRepostajes.UpdBDRepostaje(conn, it.KmTotales, nuevoRep);
+
+                        // Actualizar la lista de Repostajes y la pantalla Ppal
+                        LeerListaRepostajesBD();
+                        ActualizarListaPpal2();
+                        return;
                     }
                 }
             }
@@ -331,10 +373,40 @@ namespace CuentasCoche
                     {
                         FormNuevoMantenimiento frmNuevoMant = new FormNuevoMantenimiento(it);
                         frmNuevoMant.ShowDialog();
+                        Mantenimiento nuevoMant = new Mantenimiento();
+                        if (frmNuevoMant.GetKmTotales() == 0)
+                            return;
+
+                        nuevoMant.Reparacion = frmNuevoMant.GetReparacion();
+                        nuevoMant.Taller = frmNuevoMant.GetTaller();
+                        nuevoMant.Lugar = frmNuevoMant.GetLugar();
+                        nuevoMant.KmTotales = frmNuevoMant.GetKmTotales();
+                        nuevoMant.Importe = frmNuevoMant.GetImporte();
+                        nuevoMant.Fecha = frmNuevoMant.GetFecha();
+
+                        // Añadir el nuevo Mantenimiento a la BD
+                        mTablaMantenimiento.UpdBDMantenimiento(conn, it.KmTotales, nuevoMant);
+
+                        // Actualizar la lista de Mantenimentos y la pantalla Ppal
+                        LeerListaMantenimientosBD();
+                        ActualizarListaPpal2();
+                        return; 
                     }
                 }
             }
             
+        }
+
+        private void dibujarGrafico1()
+        {
+            // Para mostrar la gráfica en orden hay que recorrer la lista del revés, 
+            // ya que en la lista original, los elementos más nuevos son los primeros,
+            // y quedarían al principio de la gráfica.
+            ChartPrecioGasolina.Series["Series1"].Points.Clear();
+            foreach (Repostaje repostaje in listaRep.Reverse<Repostaje>())
+            {
+                ChartPrecioGasolina.Series["Series1"].Points.AddY(repostaje.Precio);
+            }
         }
     }
 }

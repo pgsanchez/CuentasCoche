@@ -12,6 +12,7 @@ namespace CuentasCoche
         // Leer tabla de mantenimientos
         public List<Mantenimiento> LeerBDMantenimiento(MySqlConnection conn)
         {
+            int kmMantenimientoAnterior = 0;
             List<Mantenimiento> listaMantenimientoBD = new List<Mantenimiento>();
             try
             {
@@ -28,6 +29,8 @@ namespace CuentasCoche
                     obj.Importe = reader.GetFloat("importe");
                     obj.Taller = reader["taller"].ToString();
                     obj.Reparacion = reader["reparacion"].ToString();
+                    obj.KmParciales = obj.KmTotales - kmMantenimientoAnterior;
+                    kmMantenimientoAnterior = obj.KmTotales;
                     listaMantenimientoBD.Add(obj);
                 }
                 conn.Close();
@@ -47,7 +50,7 @@ namespace CuentasCoche
             {
                 conn.Open();
                 MySqlCommand instruccion = conn.CreateCommand();
-                instruccion.CommandText = "update Mantenimientos set fecha = '" + nuevoMantenimiento.Fecha.ToString("yyyy-MM-dd") + "', kmTotales = '" + nuevoMantenimiento.KmTotales + "', lugar = '" + nuevoMantenimiento.Lugar + "', importe = '" + nuevoMantenimiento.Importe + "', taller = '" + nuevoMantenimiento.Taller + "', reparacion = '" + nuevoMantenimiento.Reparacion + "';";
+                instruccion.CommandText = "update Mantenimientos set fecha = '" + nuevoMantenimiento.Fecha.ToString("yyyy-MM-dd") + "', kmTotales = '" + nuevoMantenimiento.KmTotales + "', lugar = '" + nuevoMantenimiento.Lugar + "', importe = '" + nuevoMantenimiento.Importe + "', taller = '" + nuevoMantenimiento.Taller + "', reparacion = '" + nuevoMantenimiento.Reparacion + "' where kmTotales = '" + idViejoMantenimiento + "';";
                 instruccion.ExecuteReader();
                 conn.Close();
             }

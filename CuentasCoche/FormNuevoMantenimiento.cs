@@ -12,9 +12,11 @@ namespace CuentasCoche
     public partial class FormNuevoMantenimiento : Form
     {
         private Mantenimiento dlgMantenimiento = new Mantenimiento();
+        private bool editado = false;
         public FormNuevoMantenimiento()
         {
             InitializeComponent();
+            btnEdit2.Visible = false;
         }
 
         public FormNuevoMantenimiento(Mantenimiento objMantenimiento)
@@ -24,6 +26,7 @@ namespace CuentasCoche
             editImporte.Text = objMantenimiento.Importe.ToString();
             editKmTotales.Text = objMantenimiento.KmTotales.ToString();
             editLugar.Text = objMantenimiento.Lugar;
+            editKmParciales.Text = objMantenimiento.KmParciales.ToString();
             editTaller.Text = objMantenimiento.Taller;
             editDescripcion.Text = objMantenimiento.Reparacion;
             dateTimePicker1.Enabled = false;
@@ -32,6 +35,8 @@ namespace CuentasCoche
             editLugar.Enabled = false;
             editTaller.Enabled = false;
             editDescripcion.Enabled = false;
+            btnEdit2.Visible = true;
+            editKmParciales.Enabled = false;
         }
 
         private void dateTimePicker1_ValueChanged(object sender, EventArgs e)
@@ -108,7 +113,21 @@ namespace CuentasCoche
 
         private void btnCancel_Click(object sender, EventArgs e)
         {
+            // Se ponen los KmTotales a 0 para que no se tengan en cuenta ninguno de los valores
             dlgMantenimiento.KmTotales = 0;
+        }
+
+        private void btnEdit2_Click(object sender, EventArgs e)
+        {
+            editImporte.Enabled = true;
+            dateTimePicker1.Enabled = true;
+            editKmTotales.Enabled = true;
+            editLugar.Enabled = true;
+            editKmParciales.Enabled = false;
+            editTaller.Enabled = true;
+            editDescripcion.Enabled = true;
+            btnEdit2.Enabled = false;
+            editado = true;
         }
     }
 }

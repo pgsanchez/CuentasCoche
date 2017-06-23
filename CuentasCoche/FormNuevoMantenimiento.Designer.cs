@@ -43,6 +43,7 @@
             this.labelDescripcion = new System.Windows.Forms.Label();
             this.btnOk = new System.Windows.Forms.Button();
             this.btnCancel = new System.Windows.Forms.Button();
+            this.btnEdit2 = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // dateTimePicker1
@@ -169,7 +170,7 @@
             // btnCancel
             // 
             this.btnCancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-            this.btnCancel.Location = new System.Drawing.Point(45, 372);
+            this.btnCancel.Location = new System.Drawing.Point(30, 372);
             this.btnCancel.Name = "btnCancel";
             this.btnCancel.Size = new System.Drawing.Size(75, 23);
             this.btnCancel.TabIndex = 14;
@@ -177,11 +178,22 @@
             this.btnCancel.UseVisualStyleBackColor = true;
             this.btnCancel.Click += new System.EventHandler(this.btnCancel_Click);
             // 
+            // btnEdit2
+            // 
+            this.btnEdit2.Location = new System.Drawing.Point(116, 372);
+            this.btnEdit2.Name = "btnEdit2";
+            this.btnEdit2.Size = new System.Drawing.Size(75, 23);
+            this.btnEdit2.TabIndex = 15;
+            this.btnEdit2.Text = "Editar";
+            this.btnEdit2.UseVisualStyleBackColor = true;
+            this.btnEdit2.Click += new System.EventHandler(this.btnEdit2_Click);
+            // 
             // FormNuevoMantenimiento
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(284, 407);
+            this.Controls.Add(this.btnEdit2);
             this.Controls.Add(this.btnCancel);
             this.Controls.Add(this.btnOk);
             this.Controls.Add(this.labelDescripcion);
@@ -221,5 +233,6 @@
         private System.Windows.Forms.Label labelDescripcion;
         private System.Windows.Forms.Button btnOk;
         private System.Windows.Forms.Button btnCancel;
+        private System.Windows.Forms.Button btnEdit2;
     }
 }

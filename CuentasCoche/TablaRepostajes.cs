@@ -64,7 +64,7 @@ namespace CuentasCoche
             {
                 conn.Open();
                 MySqlCommand instruccion = conn.CreateCommand();
-                instruccion.CommandText = "update Repostajes set fecha = '" + nuevoRepostaje.Fecha.ToString("yyyy-MM-dd") + "', kmTotales = '" + nuevoRepostaje.KmTotales + "', lugar = '" + nuevoRepostaje.Lugar + "', importe = '" + nuevoRepostaje.Importe + "', litros = '" + nuevoRepostaje.Litros + "', precio = '" + nuevoRepostaje.Precio + "';";
+                instruccion.CommandText = "update Repostajes set fecha = '" + nuevoRepostaje.Fecha.ToString("yyyy-MM-dd") + "', kmTotales = '" + nuevoRepostaje.KmTotales + "', lugar = '" + nuevoRepostaje.Lugar + "', importe = '" + nuevoRepostaje.Importe + "', litros = '" + nuevoRepostaje.Litros + "', precio = '" + nuevoRepostaje.Precio + "' where kmTotales = '" + idViejoRepostaje + "';";
                 instruccion.ExecuteReader();
                 conn.Close();
             }
