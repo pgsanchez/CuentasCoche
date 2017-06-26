@@ -44,6 +44,7 @@
             this.btnOk = new System.Windows.Forms.Button();
             this.btnCancel = new System.Windows.Forms.Button();
             this.btnEdit = new System.Windows.Forms.Button();
+            this.btnBorrarRep = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // dateTimePicker1
@@ -187,11 +188,22 @@
             this.btnEdit.UseVisualStyleBackColor = true;
             this.btnEdit.Click += new System.EventHandler(this.btnEdit_Click);
             // 
+            // btnBorrarRep
+            // 
+            this.btnBorrarRep.Location = new System.Drawing.Point(116, 288);
+            this.btnBorrarRep.Name = "btnBorrarRep";
+            this.btnBorrarRep.Size = new System.Drawing.Size(75, 23);
+            this.btnBorrarRep.TabIndex = 16;
+            this.btnBorrarRep.Text = "Borrar";
+            this.btnBorrarRep.UseVisualStyleBackColor = true;
+            this.btnBorrarRep.Click += new System.EventHandler(this.btnBorrarRep_Click);
+            // 
             // FormNuevoRepostaje
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(284, 294);
+            this.ClientSize = new System.Drawing.Size(284, 321);
+            this.Controls.Add(this.btnBorrarRep);
             this.Controls.Add(this.btnEdit);
             this.Controls.Add(this.btnCancel);
             this.Controls.Add(this.btnOk);
@@ -233,5 +245,6 @@
         private System.Windows.Forms.Button btnOk;
         private System.Windows.Forms.Button btnCancel;
         private System.Windows.Forms.Button btnEdit;
+        private System.Windows.Forms.Button btnBorrarRep;
     }
 }

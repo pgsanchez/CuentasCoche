@@ -343,17 +343,30 @@ namespace CuentasCoche
                         frmNuevoRep.ShowDialog();
                         Repostaje nuevoRep = new Repostaje();
                         if (frmNuevoRep.GetKmTotales() == 0)
+                        {
+                            // Se ha cancelado la modificación (botón Cancelar)
                             return;
+                        }
+                        else if (frmNuevoRep.GetKmTotales() == -1)
+                        {
+                            if (frmNuevoRep.GetBorrarRepostaje())
+                            {
+                                // Hay que borrar el Repostaje de la BD
+                                mTablaRepostajes.DelBDRepostaje(conn, it);
+                            }
+                        }
+                        else
+                        {
+                            nuevoRep.Litros = frmNuevoRep.GetLitros();
+                            nuevoRep.Precio = frmNuevoRep.GetPrecio();
+                            nuevoRep.Importe = frmNuevoRep.GetImporte();
+                            nuevoRep.KmTotales = frmNuevoRep.GetKmTotales();
+                            nuevoRep.Lugar = frmNuevoRep.GetLugar();
+                            nuevoRep.Fecha = frmNuevoRep.GetFecha();
 
-                        nuevoRep.Litros = frmNuevoRep.GetLitros();
-                        nuevoRep.Precio = frmNuevoRep.GetPrecio();
-                        nuevoRep.Importe = frmNuevoRep.GetImporte();
-                        nuevoRep.KmTotales = frmNuevoRep.GetKmTotales();
-                        nuevoRep.Lugar = frmNuevoRep.GetLugar();
-                        nuevoRep.Fecha = frmNuevoRep.GetFecha();
-
-                        // Añadir el nuevo Repostaje a la BD
-                        mTablaRepostajes.UpdBDRepostaje(conn, it.KmTotales, nuevoRep);
+                            // Añadir el nuevo Repostaje a la BD
+                            mTablaRepostajes.UpdBDRepostaje(conn, it.KmTotales, nuevoRep);
+                        }
 
                         // Actualizar la lista de Repostajes y la pantalla Ppal
                         LeerListaRepostajesBD();
@@ -375,17 +388,30 @@ namespace CuentasCoche
                         frmNuevoMant.ShowDialog();
                         Mantenimiento nuevoMant = new Mantenimiento();
                         if (frmNuevoMant.GetKmTotales() == 0)
+                        {
+                            // Se ha cancelado la modificación (botón Cancelar)
                             return;
+                        }
+                        else if (frmNuevoMant.GetKmTotales() == -1)
+                        {
+                            if (frmNuevoMant.GetBorrarMantenimiento())
+                            {
+                                // Hay que borrar el Repostaje de la BD
+                                mTablaMantenimiento.DelBDMantenimiento(conn, it);
+                            }
+                        }
+                        else
+                        {
+                            nuevoMant.Reparacion = frmNuevoMant.GetReparacion();
+                            nuevoMant.Taller = frmNuevoMant.GetTaller();
+                            nuevoMant.Lugar = frmNuevoMant.GetLugar();
+                            nuevoMant.KmTotales = frmNuevoMant.GetKmTotales();
+                            nuevoMant.Importe = frmNuevoMant.GetImporte();
+                            nuevoMant.Fecha = frmNuevoMant.GetFecha();
 
-                        nuevoMant.Reparacion = frmNuevoMant.GetReparacion();
-                        nuevoMant.Taller = frmNuevoMant.GetTaller();
-                        nuevoMant.Lugar = frmNuevoMant.GetLugar();
-                        nuevoMant.KmTotales = frmNuevoMant.GetKmTotales();
-                        nuevoMant.Importe = frmNuevoMant.GetImporte();
-                        nuevoMant.Fecha = frmNuevoMant.GetFecha();
-
-                        // Añadir el nuevo Mantenimiento a la BD
-                        mTablaMantenimiento.UpdBDMantenimiento(conn, it.KmTotales, nuevoMant);
+                            // Añadir el nuevo Mantenimiento a la BD
+                            mTablaMantenimiento.UpdBDMantenimiento(conn, it.KmTotales, nuevoMant);
+                        }
 
                         // Actualizar la lista de Mantenimentos y la pantalla Ppal
                         LeerListaMantenimientosBD();

@@ -13,10 +13,12 @@ namespace CuentasCoche
     {
         private Repostaje dlgRepostaje = new Repostaje();
         private bool editado = false;
+        private bool borrarRepostaje = false; // Indica si hay que borrar este Repostaje.
         public FormNuevoRepostaje()
         {
             InitializeComponent();
             btnEdit.Visible = false;
+            btnBorrarRep.Visible = false;
         }
 
         public FormNuevoRepostaje(Repostaje objRepostaje)
@@ -37,6 +39,7 @@ namespace CuentasCoche
             editLugar.Enabled = false;
             btnEdit.Visible = true;
             editKmParciales.Enabled = false;
+            btnBorrarRep.Enabled = false;
         }
 
         private void editImporte_TextChanged(object sender, EventArgs e)
@@ -126,6 +129,11 @@ namespace CuentasCoche
             return editado;
         }
 
+        public bool GetBorrarRepostaje()
+        {
+            return borrarRepostaje;
+        }
+
         private void btnCancel_Click(object sender, EventArgs e)
         {
             // Se ponen los KmTotales a 0 para que no se tengan en cuenta ninguno de los valores
@@ -143,6 +151,17 @@ namespace CuentasCoche
             editKmParciales.Enabled = false;
             btnEdit.Enabled = false;
             editado = true;
+            btnBorrarRep.Enabled = true;
+        }
+
+        private void btnBorrarRep_Click(object sender, EventArgs e)
+        {
+            // Se ponen los KmTotales a -1 y la variable de borrarRepostaje a true
+            // Esto indicará a la ventana padre que hay que borrar esta entrada de 
+            // la BD
+            dlgRepostaje.KmTotales = -1;
+            borrarRepostaje = true;
+            this.Close();
         }
     }
 }

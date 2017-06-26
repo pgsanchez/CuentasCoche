@@ -13,10 +13,12 @@ namespace CuentasCoche
     {
         private Mantenimiento dlgMantenimiento = new Mantenimiento();
         private bool editado = false;
+        private bool borrarMantenimiento = false; // Indica si hay que borrar este Mantenimiento.
         public FormNuevoMantenimiento()
         {
             InitializeComponent();
             btnEdit2.Visible = false;
+            btnBorrarMant.Visible = false;
         }
 
         public FormNuevoMantenimiento(Mantenimiento objMantenimiento)
@@ -37,6 +39,7 @@ namespace CuentasCoche
             editDescripcion.Enabled = false;
             btnEdit2.Visible = true;
             editKmParciales.Enabled = false;
+            btnBorrarMant.Enabled = false;
         }
 
         private void dateTimePicker1_ValueChanged(object sender, EventArgs e)
@@ -111,6 +114,11 @@ namespace CuentasCoche
             return dlgMantenimiento.Fecha;
         }
 
+        public bool GetBorrarMantenimiento()
+        {
+            return borrarMantenimiento;
+        }
+
         private void btnCancel_Click(object sender, EventArgs e)
         {
             // Se ponen los KmTotales a 0 para que no se tengan en cuenta ninguno de los valores
@@ -128,6 +136,17 @@ namespace CuentasCoche
             editDescripcion.Enabled = true;
             btnEdit2.Enabled = false;
             editado = true;
+            btnBorrarMant.Enabled = true;
+        }
+
+        private void btnBorrarMant_Click(object sender, EventArgs e)
+        {
+            // Se ponen los KmTotales a -1 y la variable de borrarRepostaje a true
+            // Esto indicará a la ventana padre que hay que borrar esta entrada de 
+            // la BD
+            dlgMantenimiento.KmTotales = -1;
+            borrarMantenimiento = true;
+            this.Close();
         }
     }
 }
